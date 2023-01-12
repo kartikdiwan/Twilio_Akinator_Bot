@@ -102,6 +102,9 @@ def bot():
         if incoming_msg < 1 or incoming_msg > 5:
             msg.body("Please only input numbers between 1-5!\nSession will now restart\nSend Hi again to restart!")
             layer = 0
+            questions_so_far = []
+            answers_so_far = []
+            probabilities = []
             return str(resp)
         answers_so_far.append(answer_prob.get(incoming_msg))
         probabilities = calculate_probabilites(questions_so_far, answers_so_far)
@@ -115,7 +118,7 @@ def bot():
         layer = layer + 1
         return str(resp)
 
-    if layer == que_len*2:
+    if layer == que_len*2: #Find the result and Print
         result = sorted(probabilities, key=lambda p: p['probability'], reverse=True)[0]
         final_answer = result.get("name")
         msg.body("I guessed : " + final_answer + "\nSend Hi again to restart!")
